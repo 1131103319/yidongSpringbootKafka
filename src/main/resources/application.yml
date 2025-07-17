@@ -1,0 +1,27 @@
+spring:
+  task:
+    scheduling:
+      pool:
+        size: 2
+
+driverName: org.apache.hive.jdbc.HiveDriver
+#url: jdbc:hive2://10.179.132.112:10000/mobile_db;connectionTimeout=30000;
+url: jdbc:hive2://.179.132.112:10000/mobile_db;connectionTimeout=300;
+username: test
+passwd: 123
+
+#bootstrap.servers1: aiops-ss-kfk01:9094,aiops-ss-kfk02:9094,aiops-ss-kfk03:9094
+#bootstrap.servers2: aiops-st-kfk01:9094,aiops-st-kfk02:9094,aiops-st-kfk03:9094
+bootstrap.servers1: 127.0.0.1:9092
+bootstrap.servers2: 127.0.0.1:9092
+#topic: saas-metrics-aiops-servicesystem-rawdata
+topic: test
+
+dirTarget: /Users/wohaocai/Desktop/linsh1
+dirSource: /Users/wohaocai/Desktop/linsh
+
+#dirTarget: /root/yidongAlarm
+#dirSource: /root/yidongAlarm1
+
+cron1: "5 1 */24 * * *"
+cron2: "5 */30 * * * *"
