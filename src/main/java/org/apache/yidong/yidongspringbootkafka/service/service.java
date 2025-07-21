@@ -12,13 +12,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 @Slf4j
 @Service
 public class service {
-    ScheduledExecutorService scheduledExecutorService;
     @Value("${topic}")
     String topic;
     @Value("${bootstrap.servers1}")
@@ -40,16 +37,23 @@ public class service {
         client2 = org.apache.yidong.yidongspringbootkafka.utils.Producer.getProducer("2", bootstrapServer2);
         data1Thread1 = new Data1Thread1(jdbcUtils,topic, client1, client2);
         data1Thread2 = new Data1Thread2(readFile,topic, client1, client2);
-        scheduledExecutorService = Executors.newScheduledThreadPool(2);
     }
-//    @Scheduled(cron="${cron1}")
-//    public void cron1() throws InterruptedException {
-//        data1Thread1.run();
-//    }
+    @Scheduled(cron="${cron1}")
+    public void cron1(){
+        try {
+            data1Thread1.run();
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+    }
 
     @Scheduled(cron="${cron2}")
     public void cron2(){
-        data1Thread2.run();
+        try {
+            data1Thread2.run();
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
     }
 
 }

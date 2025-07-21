@@ -117,9 +117,11 @@ public class ReadFile {
             file.mkdirs();
             file1.mkdirs();
         }
-        for(File file2 : file1.listFiles()) {
-            file2.renameTo(new File(dirTarget+File.separator+file2.getName()));
-            log.info("move file success {}",file2.getName());
+        if(file1.listFiles().length>3) {
+            for (File file2 : file1.listFiles()) {
+                file2.renameTo(new File(dirTarget + File.separator + file2.getName()));
+                log.info("move file success {}", file2.getName());
+            }
         }
         getMemory();
         getCpu();

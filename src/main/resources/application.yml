@@ -23,5 +23,20 @@ dirSource: /Users/wohaocai/Desktop/linsh
 #dirTarget: /root/yidongAlarm
 #dirSource: /root/yidongAlarm1
 
-cron1: "5 1 */24 * * *"
-cron2: "5 */30 * * * *"
+#cron1: "5 1 4 * * *"
+#cron2: "5 0,30 * * * *"
+cron1: "5 */1 * * * *"
+cron2: "20 */1 * * * *"
+
+# application.yml 示例
+logging:
+  file:
+    name: logs/application.log           # 日志文件路径
+    # 日志文件最大大小
+    max-size: 10MB
+    # 保留的历史日志文件数
+    max-history: 30
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"   # 控制台输出格式
+    file: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"      # 文件输出格式
+

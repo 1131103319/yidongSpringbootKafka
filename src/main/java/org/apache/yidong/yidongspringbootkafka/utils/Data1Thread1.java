@@ -25,14 +25,14 @@ public class Data1Thread1 extends Thread {
     }
 
     public static String getStartTime() {
-        LocalDateTime localDateTime = LocalDateTime.now().minusHours(3).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime localDateTime = LocalDateTime.now().minusHours(4).withMinute(0).withSecond(0).withNano(0);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String format = localDateTime.format(formatter);
         return format;
     }
 
     public static String getEndTime() {
-        LocalDateTime localDateTime = LocalDateTime.now().minusHours(2).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime localDateTime = LocalDateTime.now().minusHours(3).withMinute(0).withSecond(0).withNano(0);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String format = localDateTime.format(formatter);
         return format;
