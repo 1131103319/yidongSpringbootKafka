@@ -7,9 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 public class YidongSpringbootKafkaApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(YidongSpringbootKafkaApplication.class, args);
-//        System.out.println(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
     }
 }

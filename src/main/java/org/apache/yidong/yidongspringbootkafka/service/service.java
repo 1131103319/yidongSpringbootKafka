@@ -22,6 +22,8 @@ public class service {
     String bootstrapServer1;
     @Value("${bootstrap.servers2}")
     String bootstrapServer2;
+    @Value("${delyTime}")
+    int delyTime;
     @Autowired
     JDBCUtils jdbcUtils;
     @Autowired
@@ -35,7 +37,7 @@ public class service {
     public void init() {
         client1 = org.apache.yidong.yidongspringbootkafka.utils.Producer.getProducer("1", bootstrapServer1);
         client2 = org.apache.yidong.yidongspringbootkafka.utils.Producer.getProducer("2", bootstrapServer2);
-        data1Thread1 = new Data1Thread1(jdbcUtils,topic, client1, client2);
+        data1Thread1 = new Data1Thread1(delyTime,jdbcUtils,topic, client1, client2);
         data1Thread2 = new Data1Thread2(readFile,topic, client1, client2);
     }
     @Scheduled(cron="${cron1}")
@@ -55,5 +57,6 @@ public class service {
             log.error(e.getMessage());
         }
     }
+
 
 }

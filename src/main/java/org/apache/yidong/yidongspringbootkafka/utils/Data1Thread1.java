@@ -17,22 +17,24 @@ public class Data1Thread1 extends Thread {
     private final Producer<Integer, String> producer;
     private final Producer<Integer, String> producer1;
     private JDBCUtils jdbcUtils;
-    public Data1Thread1(JDBCUtils jdbcUtils,String topic,Producer<Integer, String> producer, Producer<Integer, String> producer1) {
+    private int delytime;
+    public Data1Thread1(int delytime,JDBCUtils jdbcUtils,String topic,Producer<Integer, String> producer, Producer<Integer, String> producer1) {
         this.topic = topic;
         this.producer = producer;
         this.producer1 = producer1;
         this.jdbcUtils = jdbcUtils;
+        this.delytime = delytime;
     }
 
-    public static String getStartTime() {
-        LocalDateTime localDateTime = LocalDateTime.now().minusHours(4).withMinute(0).withSecond(0).withNano(0);
+    public static String getStartTime(int delytime) {
+        LocalDateTime localDateTime = LocalDateTime.now().minusHours(delytime).withMinute(0).withSecond(0).withNano(0);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String format = localDateTime.format(formatter);
         return format;
     }
 
-    public static String getEndTime() {
-        LocalDateTime localDateTime = LocalDateTime.now().minusHours(3).withMinute(0).withSecond(0).withNano(0);
+    public static String getEndTime(int delytime) {
+        LocalDateTime localDateTime = LocalDateTime.now().minusHours(delytime-1).withMinute(0).withSecond(0).withNano(0);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String format = localDateTime.format(formatter);
         return format;
@@ -43,8 +45,8 @@ public class Data1Thread1 extends Thread {
         log.info("New Producer: start.");
         int messageNo = 1;
         try {
-            String startTime = getStartTime();
-            String endTime = getEndTime();
+            String startTime = getStartTime(delytime);
+            String endTime = getEndTime(delytime);
             double mdn4G = jdbcUtils.getmdn_4g(startTime, endTime);
             double mdn5G = jdbcUtils.getmdn_5g(startTime, endTime);
             double mdnhomelog = jdbcUtils.getmdn_homelog(startTime, endTime);

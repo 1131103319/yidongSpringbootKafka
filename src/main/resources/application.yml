@@ -19,10 +19,10 @@ topic: test
 
 dirTarget: /Users/wohaocai/Desktop/linsh1
 dirSource: /Users/wohaocai/Desktop/linsh
-
 #dirTarget: /root/yidongAlarm
 #dirSource: /root/yidongAlarm1
 
+delyTime: 4
 #cron1: "5 1 4 * * *"
 #cron2: "5 0,30 * * * *"
 cron1: "5 */1 * * * *"
