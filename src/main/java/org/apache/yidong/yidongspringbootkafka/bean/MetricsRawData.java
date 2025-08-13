@@ -32,7 +32,7 @@ public class MetricsRawData {
         //todo 业务系统英文缩写
         dims.put("object","swrzjzccpt");
         //todo 业务系统中文名 通用维保-日志存储平台
-        dims.put("source","通用维保-日志存储平台");
+        dims.put("source","集中上网日志存储平台");
         values.put("swrzjzccpt_4g_msisdn_null_rate",msisdn_null_4g);
         values.put("swrzjzccpt_5g_msisdn_null_rate",msisdn_null_5g);
         values.put("swrzjzccpt_homelog_msisdn_null_rate",msisdn_null_homelog);
