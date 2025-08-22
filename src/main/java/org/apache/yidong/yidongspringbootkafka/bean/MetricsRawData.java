@@ -26,7 +26,7 @@ public class MetricsRawData {
     //todo 度量值
     private Map<String, Object> values = new HashMap<>();
 
-    public MetricsRawData(String timestamp,double msisdn_null_4g,double msisdn_null_5g,double msisdn_null_homelog,double ip_null_homelog,double ip_null_idc) {
+    public MetricsRawData(String timestamp,String msisdn_null_4g,String msisdn_null_5g,String msisdn_null_homelog,String ip_null_homelog,String ip_null_idc) {
         this.timestamp = timestamp;
         dims.put("data_name","servicesystem_swrzjzccpt");
         //todo 业务系统英文缩写

@@ -47,11 +47,11 @@ public class Data1Thread1 extends Thread {
         try {
             String startTime = getStartTime(delytime);
             String endTime = getEndTime(delytime);
-            double mdn4G = jdbcUtils.getmdn_4g(startTime, endTime);
-            double mdn5G = jdbcUtils.getmdn_5g(startTime, endTime);
-            double mdnhomelog = jdbcUtils.getmdn_homelog(startTime, endTime);
-            double iphomelog = jdbcUtils.getip_homelog(startTime, endTime);
-            double ipidc = jdbcUtils.getip_idc(startTime, endTime);
+            String mdn4G = jdbcUtils.getmdn_4g(startTime, endTime);
+            String mdn5G = jdbcUtils.getmdn_5g(startTime, endTime);
+            String mdnhomelog = jdbcUtils.getmdn_homelog(startTime, endTime);
+            String iphomelog = jdbcUtils.getip_homelog(startTime, endTime);
+            String ipidc = jdbcUtils.getip_idc(startTime, endTime);
             //构造消息
             MetricsRawData metricsRawData = new MetricsRawData(LocalDateTime.now().toString(), mdn4G, mdn5G, mdnhomelog, iphomelog, ipidc);
             String messageStr = metricsRawData.toString();

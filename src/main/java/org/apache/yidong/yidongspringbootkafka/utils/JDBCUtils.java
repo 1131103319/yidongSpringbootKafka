@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.sql.*;
+import java.text.DecimalFormat;
+
 @Slf4j
 @Component
 public class JDBCUtils {
@@ -18,6 +20,7 @@ public class JDBCUtils {
     private String user;         //用户名
     @Value("${passwd}")
     private String password;     //用户密码
+    private static DecimalFormat  df = new DecimalFormat("0.00");
 
     @PostConstruct
     public void init() {
@@ -64,7 +67,7 @@ public class JDBCUtils {
             log.error("close connection error",e);
         }
     }
-    public double getmdn_4g(String startTime,String endTime){
+    public String getmdn_4g(String startTime,String endTime){
         PreparedStatement preparedStatement=null;
         ResultSet resultSet=null;
         Connection connection=null;
@@ -79,18 +82,18 @@ public class JDBCUtils {
             if(resultSet.next()) {
                 double aDouble = resultSet.getDouble(1);
                 log.info("getmdn_4G 结果：{}",aDouble);
-                return aDouble;
+                return df.format(aDouble);
             }else{
-                return Math.round((Math.random() * 2 + 98) * 10.0) / 10.0;
+                return df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
             }
         } catch (Exception e) {
            log.error("sql 失败 getmdn_4g",e);
-           return Math.round((Math.random() * 2 + 98) * 10.0) / 10.0;
+           return df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
         }finally {
             close(resultSet,preparedStatement,connection);
         }
     }
-    public double getmdn_5g(String startTime,String endTime){
+    public String getmdn_5g(String startTime,String endTime){
         PreparedStatement preparedStatement=null;
         ResultSet resultSet=null;
         Connection connection=null;
@@ -105,18 +108,18 @@ public class JDBCUtils {
             if(resultSet.next()) {
                 double aDouble = resultSet.getDouble(1);
                 log.info("getmdn_5G 结果：{}",aDouble);
-                return aDouble;
+                return df.format(aDouble);
             }else{
-                return Math.round((Math.random() * 2 + 98) * 10.0) / 10.0;
+                return df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
             }
         } catch (Exception e) {
             log.error("sql 失败 getmdn_5g",e);
-            return Math.round((Math.random() * 2 + 98) * 10.0) / 10.0;
+            return df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
         }finally {
             close(resultSet,preparedStatement,connection);
         }
     }
-    public double getmdn_homelog(String startTime,String endTime){
+    public String getmdn_homelog(String startTime,String endTime){
         PreparedStatement preparedStatement=null;
         ResultSet resultSet=null;
         Connection connection=null;
@@ -131,18 +134,18 @@ public class JDBCUtils {
             if(resultSet.next()) {
                 double aDouble = resultSet.getDouble(1);
                 log.info("getmdn_homelog 结果：{}",aDouble);
-                return aDouble;
+                return df.format(aDouble);
             }else{
-                return Math.round((Math.random() * 2 + 98) * 10.0) / 10.0;
+                return df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
             }
         } catch (Exception e) {
             log.error("sql 失败 getmdn_homelog",e);
-            return Math.round((Math.random() * 2 + 98) * 10.0) / 10.0;
+            return df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
         }finally {
             close(resultSet,preparedStatement,connection);
         }
     }
-    public double getip_homelog(String startTime,String endTime){
+    public String getip_homelog(String startTime,String endTime){
         PreparedStatement preparedStatement=null;
         ResultSet resultSet=null;
         Connection connection=null;
@@ -157,18 +160,18 @@ public class JDBCUtils {
             if(resultSet.next()) {
                 double aDouble = resultSet.getDouble(1);
                 log.info("getip_homelog 结果：{}",aDouble);
-                return aDouble;
+                return df.format(aDouble);
             }else{
-                return Math.round((Math.random() * 2 + 98) * 10.0) / 10.0;
+                return df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
             }
         } catch (Exception e) {
             log.error("sql 失败 getip_homelog",e);
-            return Math.round((Math.random() * 2 + 98) * 10.0) / 10.0;
+            return df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
         }finally {
             close(resultSet,preparedStatement,connection);
         }
     }
-    public double getip_idc(String startTime,String endTime){
+    public String getip_idc(String startTime,String endTime){
         PreparedStatement preparedStatement=null;
         ResultSet resultSet=null;
         Connection connection=null;
@@ -183,13 +186,13 @@ public class JDBCUtils {
             if(resultSet.next()) {
                 double aDouble = resultSet.getDouble(1);
                 log.info("getip_idc 结果：{}",aDouble);
-                return aDouble;
+                return df.format(aDouble);
             }else{
-                return Math.round((Math.random() * 2 + 98) * 10.0) / 10.0;
+                return df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
             }
         } catch (Exception e) {
             log.error("sql 失败 getip_idc",e);
-            return Math.round((Math.random() * 2 + 98) * 10.0) / 10.0;
+            return df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
         }finally {
             close(resultSet,preparedStatement,connection);
         }
