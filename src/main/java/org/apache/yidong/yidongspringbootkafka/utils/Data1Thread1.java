@@ -27,7 +27,7 @@ public class Data1Thread1 extends Thread {
     }
 
     public static String getStartTime(int delytime) {
-        LocalDateTime localDateTime = LocalDateTime.now().minusHours(delytime).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime localDateTime = LocalDateTime.now().minusHours(delytime).withMinute(2).withSecond(0).withNano(0);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String format = localDateTime.format(formatter);
         return format;
