@@ -8,6 +8,8 @@ class YidongSpringbootKafkaApplicationTests {
 
     @Test
     void contextLoads() {
+        double a=0.0;
+        System.out.println(a<50);
     }
 
 }

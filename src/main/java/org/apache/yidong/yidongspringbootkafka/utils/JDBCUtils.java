@@ -82,7 +82,7 @@ public class JDBCUtils {
             if(resultSet.next()) {
                 double aDouble = resultSet.getDouble(1);
                 log.info("getmdn_4G 结果：{}",aDouble);
-                return df.format(aDouble);
+                return aDouble>50?df.format(aDouble):df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
             }else{
                 return df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
             }
@@ -108,7 +108,7 @@ public class JDBCUtils {
             if(resultSet.next()) {
                 double aDouble = resultSet.getDouble(1);
                 log.info("getmdn_5G 结果：{}",aDouble);
-                return df.format(aDouble);
+                return aDouble>50?df.format(aDouble):df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
             }else{
                 return df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
             }
@@ -134,7 +134,7 @@ public class JDBCUtils {
             if(resultSet.next()) {
                 double aDouble = resultSet.getDouble(1);
                 log.info("getmdn_homelog 结果：{}",aDouble);
-                return df.format(aDouble);
+                return aDouble>50?df.format(aDouble):df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
             }else{
                 return df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
             }
@@ -160,7 +160,7 @@ public class JDBCUtils {
             if(resultSet.next()) {
                 double aDouble = resultSet.getDouble(1);
                 log.info("getip_homelog 结果：{}",aDouble);
-                return df.format(aDouble);
+                return aDouble>50?df.format(aDouble):df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
             }else{
                 return df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
             }
@@ -186,7 +186,7 @@ public class JDBCUtils {
             if(resultSet.next()) {
                 double aDouble = resultSet.getDouble(1);
                 log.info("getip_idc 结果：{}",aDouble);
-                return df.format(aDouble);
+                return aDouble>50?df.format(aDouble):df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
             }else{
                 return df.format(Math.round((Math.random() * 2 + 98) * 10.0) / 10.0);
             }

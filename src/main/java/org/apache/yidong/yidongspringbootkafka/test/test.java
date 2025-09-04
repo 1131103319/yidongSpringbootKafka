@@ -11,5 +11,7 @@ public class test {
 //        System.out.println(df.format(100.0));
         System.out.println(getStartTime(12));
         System.out.println(getEndTime(12));
+        double a=0.0;
+        System.out.println(a<50);
     }
 }
