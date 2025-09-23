@@ -78,6 +78,7 @@ public class JDBCUtils {
             preparedStatement=connection.prepareStatement(sql);
             preparedStatement.setString(1,startTime);
             preparedStatement.setString(2,endTime);
+            preparedStatement.setQueryTimeout(20*60);
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()) {
                 double aDouble = resultSet.getDouble(1);
@@ -104,7 +105,8 @@ public class JDBCUtils {
             preparedStatement=connection.prepareStatement(sql);
             preparedStatement.setString(1,startTime);
             preparedStatement.setString(2,endTime);
-             resultSet = preparedStatement.executeQuery();
+            preparedStatement.setQueryTimeout(20*60);
+            resultSet = preparedStatement.executeQuery();
             if(resultSet.next()) {
                 double aDouble = resultSet.getDouble(1);
                 log.info("getmdn_5G 结果：{}",aDouble);
@@ -130,6 +132,7 @@ public class JDBCUtils {
             preparedStatement=connection.prepareStatement(sql);
             preparedStatement.setString(1,startTime);
             preparedStatement.setString(2,endTime);
+            preparedStatement.setQueryTimeout(20*60);
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()) {
                 double aDouble = resultSet.getDouble(1);
@@ -156,6 +159,7 @@ public class JDBCUtils {
             preparedStatement=connection.prepareStatement(sql);
             preparedStatement.setString(1,startTime);
             preparedStatement.setString(2,endTime);
+            preparedStatement.setQueryTimeout(20*60);
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()) {
                 double aDouble = resultSet.getDouble(1);
@@ -182,6 +186,7 @@ public class JDBCUtils {
             preparedStatement=connection.prepareStatement(sql);
             preparedStatement.setString(1,startTime);
             preparedStatement.setString(2,endTime);
+            preparedStatement.setQueryTimeout(20*60);
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()) {
                 double aDouble = resultSet.getDouble(1);

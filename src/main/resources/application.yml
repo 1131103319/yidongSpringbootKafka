@@ -5,7 +5,7 @@ spring:
         size: 2
 
 driverName: org.apache.hive.jdbc.HiveDriver
-url: jdbc:hive2://10.179.129.30:10000/mobile_db;connectionTimeout=30000;
+url: jdbc:hive2://10.179.129.30:10000/mobile_db;connectionTimeout=3000;
 #url: jdbc:hive2://.179.132.112:10000/mobile_db;connectionTimeout=300;
 username: test
 passwd: 123
