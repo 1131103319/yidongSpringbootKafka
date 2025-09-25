@@ -28,7 +28,7 @@ public class ReadFile {
                 String ip = null;
                 MetricsRawData1 metricsRawData1 = new MetricsRawData1(LocalDateTime.now().toString());
                 String memory = null;
-                if (line.contains("SUCCESS")) {
+                if (line.contains("CHANGED")) {
                     ip = line.split(" ")[0];
                     map.put(ip, metricsRawData1);
                     String s = bufferedReader.readLine();
@@ -54,7 +54,7 @@ public class ReadFile {
             while ((line = bufferedReader.readLine()) != null) {
                 String ip = null;
                 String cpu = null;
-                if (line.contains("SUCCESS")) {
+                if (line.contains("CHANGED")) {
                     ip = line.split(" ")[0];
                     cpu = bufferedReader.readLine();
                 } else {
@@ -94,7 +94,7 @@ public class ReadFile {
             while ((line = bufferedReader.readLine()) != null) {
                 String ip = null;
                 String disk = null;
-                if (line.contains("SUCCESS")) {
+                if (line.contains("CHANGED")) {
                     String s = bufferedReader.readLine();
                     ip = line.split(" ")[0];
                     disk = s.split("%")[0];
@@ -120,7 +120,7 @@ public class ReadFile {
         if(file1.listFiles().length>3) {
             for (File file2 : file1.listFiles()) {
                 file2.renameTo(new File(dirTarget + File.separator + file2.getName()));
-                log.info("move file success {}", file2.getName());
+                log.info("move file CHANGED {}", file2.getName());
             }
         }
         getMemory();
