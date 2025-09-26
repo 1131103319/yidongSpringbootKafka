@@ -23,7 +23,7 @@ dirTarget: /root/yidongAlarm
 dirSource: /root/yidongAlarm1
 
 delyTime: 5
-cron1: "5 1 7 * * *"
+cron1: "5 1 3 * * *"
 cron2: "5 0,30 * * * *"
 #cron1: "5 */1 * * * *"
 #cron2: "20 */1 * * * *"
