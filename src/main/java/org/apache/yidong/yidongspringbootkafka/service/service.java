@@ -63,6 +63,7 @@ public class service {
 
     @Scheduled(cron="${cron3}")
     public void cron3(){
+        new File(config.getTmpdir()).mkdirs();
         String startTime= LocalDate.now().toString();
         String endTime= LocalDate.now().minusDays(1).toString();
         sftpUtil.login();
