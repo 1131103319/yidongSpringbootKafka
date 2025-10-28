@@ -214,7 +214,7 @@ public class JDBCUtils {
         PreparedStatement preparedStatement=null;
         ResultSet resultSet=null;
         Connection connection=null;
-        String sql = "select srcip as '源IP',count(*) as '请求次数' from ORC_PV_LOG where destip ='203.83.239.79' and  partition_date >= '${YESTERDAY} 09:00:00' and partition_date <='${TODAY} 09:00:00' group by srcip;";
+        String sql = "select srcip as '源IP',count(*) as '请求次数' from ORC_PV_LOG where destip ='203.83.239.79' and  partition_date >= '? 09:00:00' and partition_date <='? 09:00:00' group by srcip;";
         log.info("执行sql {},{},{}",sql,startTime,endTime);
         BufferedWriter writer=null;
         File file=new File(config.getTmpdir()+ File.separator + "qingqiu_log"+endTime+".txt.ing");
@@ -262,7 +262,7 @@ public class JDBCUtils {
         PreparedStatement preparedStatement=null;
         ResultSet resultSet=null;
         Connection connection=null;
-        String sql = "select url ,count(*) as url_requestcount   from ORC_PV_LOG where srcip='120.241.38.9' and  partition_date >= '${YESTERDAY} 09:00:00' and partition_date <='${TODAY} 09:00:00' group by url order by url_requestcount desc limit 100;";
+        String sql = "select url ,count(*) as url_requestcount   from ORC_PV_LOG where srcip='120.241.38.9' and  partition_date >= '? 09:00:00' and partition_date <='? 09:00:00' group by url order by url_requestcount desc limit 100;";
         log.info("执行sql {},{},{}",sql,startTime,endTime);
         BufferedWriter writer=null;
         File file=new File(config.getTmpdir()+ File.separator + "top100"+endTime+".txt.ing");
