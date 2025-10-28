@@ -48,5 +48,6 @@ sftp:
     username: wohaocai
     password: nicaicai
   #ftp根目录
-    rootpath: /Users/wohaocai
+    rootpath: /mnt/disk28
+    tmpdir: /mnt/disk28/tmpdir
 

@@ -66,11 +66,6 @@ public class service {
         String startTime= LocalDate.now().toString();
         String endTime= LocalDate.now().minusDays(1).toString();
         sftpUtil.login();
-        try {
-            sftpUtil.upload(config.getRootpath(),config.getTmpdir()+ File.separator + "qingqiu_log"+endTime+".txt");
-        } catch (Exception e) {
-            log.error("上传异常",e);
-        }
         if(jdbcUtils.qingqiu(startTime,endTime)){
             try {
                 sftpUtil.upload(config.getRootpath(),config.getTmpdir()+ File.separator + "qingqiu_log"+endTime+".txt");
