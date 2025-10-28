@@ -2,10 +2,15 @@ package org.apache.yidong.yidongspringbootkafka.utils;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.yidong.yidongspringbootkafka.config.Config;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.sql.*;
 import java.text.DecimalFormat;
 
@@ -21,6 +26,8 @@ public class JDBCUtils {
     @Value("${passwd}")
     private String password;     //用户密码
     private static DecimalFormat  df = new DecimalFormat("0.00");
+    @Autowired
+    private Config config;
 
     @PostConstruct
     public void init() {
@@ -202,4 +209,102 @@ public class JDBCUtils {
             close(resultSet,preparedStatement,connection);
         }
     }
+
+    public boolean qingqiu(String startTime,String endTime){
+        PreparedStatement preparedStatement=null;
+        ResultSet resultSet=null;
+        Connection connection=null;
+        String sql = "select srcip as '源IP',count(*) as '请求次数' from ORC_PV_LOG where destip ='203.83.239.79' and  partition_date >= '${YESTERDAY} 09:00:00' and partition_date <='${TODAY} 09:00:00' group by srcip;";
+        log.info("执行sql {},{},{}",sql,startTime,endTime);
+        BufferedWriter writer=null;
+        File file=new File(config.getTmpdir()+ File.separator + "qingqiu_log"+endTime+".txt.ing");
+        try {
+            connection = getConnection();
+            preparedStatement=connection.prepareStatement(sql);
+            preparedStatement.setString(1,startTime);
+            preparedStatement.setString(2,endTime);
+            preparedStatement.setQueryTimeout(40*60);
+            resultSet = preparedStatement.executeQuery();
+
+            writer = new BufferedWriter(new FileWriter(file));
+            // 获取 ResultSet 的列数
+            int columnCount = resultSet.getMetaData().getColumnCount();
+
+            // 遍历 ResultSet 每一行
+            while (resultSet.next()) {
+                StringBuilder row = new StringBuilder();
+
+                // 获取每一列的值，并按行写入文件
+                for (int i = 1; i <= columnCount; i++) {
+                    row.append(resultSet.getString(i));
+
+                    // 如果不是最后一列，添加分隔符（如逗号）
+                    if (i < columnCount) {
+                        row.append(",");
+                    }
+                }
+
+                // 写入一行数据到文件，并换行
+                writer.write(row.toString());
+                writer.newLine();
+            }
+            file.renameTo(new File(config.getTmpdir()+ File.separator + "qingqiu_log"+endTime+".txt"));
+            return true;
+        } catch (Exception e) {
+            log.error("sql 失败 请求次数",e);
+            file.delete();
+            return false;
+        }finally {
+            close(resultSet,preparedStatement,connection);
+        }
+    }
+    public boolean top100(String startTime,String endTime){
+        PreparedStatement preparedStatement=null;
+        ResultSet resultSet=null;
+        Connection connection=null;
+        String sql = "select url ,count(*) as url_requestcount   from ORC_PV_LOG where srcip='120.241.38.9' and  partition_date >= '${YESTERDAY} 09:00:00' and partition_date <='${TODAY} 09:00:00' group by url order by url_requestcount desc limit 100;";
+        log.info("执行sql {},{},{}",sql,startTime,endTime);
+        BufferedWriter writer=null;
+        File file=new File(config.getTmpdir()+ File.separator + "top100"+endTime+".txt.ing");
+        try {
+            connection = getConnection();
+            preparedStatement=connection.prepareStatement(sql);
+            preparedStatement.setString(1,startTime);
+            preparedStatement.setString(2,endTime);
+            preparedStatement.setQueryTimeout(40*60);
+            resultSet = preparedStatement.executeQuery();
+
+            writer = new BufferedWriter(new FileWriter(file));
+            // 获取 ResultSet 的列数
+            int columnCount = resultSet.getMetaData().getColumnCount();
+
+            // 遍历 ResultSet 每一行
+            while (resultSet.next()) {
+                StringBuilder row = new StringBuilder();
+
+                // 获取每一列的值，并按行写入文件
+                for (int i = 1; i <= columnCount; i++) {
+                    row.append(resultSet.getString(i));
+
+                    // 如果不是最后一列，添加分隔符（如逗号）
+                    if (i < columnCount) {
+                        row.append(",");
+                    }
+                }
+
+                // 写入一行数据到文件，并换行
+                writer.write(row.toString());
+                writer.newLine();
+            }
+            file.renameTo(new File(config.getTmpdir()+ File.separator + "top100"+endTime+".txt"));
+            return true;
+        } catch (Exception e) {
+            log.error("sql 失败 top100",e);
+            file.delete();
+            return false;
+        }finally {
+            close(resultSet,preparedStatement,connection);
+        }
+    }
+
 }
