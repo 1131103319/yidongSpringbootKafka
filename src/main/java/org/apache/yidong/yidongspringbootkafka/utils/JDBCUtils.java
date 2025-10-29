@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
 import java.text.DecimalFormat;
 
@@ -210,25 +211,26 @@ public class JDBCUtils {
         }
     }
 
-    public boolean qingqiu(String startTime,String endTime){
+    public boolean qingqiu(String startTime,String endTime,String startTime1,String endTime1){
         PreparedStatement preparedStatement=null;
         ResultSet resultSet=null;
         Connection connection=null;
-        String sql = "select srcip as '源IP',count(*) as '请求次数' from ORC_PV_LOG where destip ='203.83.239.79' and  partition_date >= '? 09:00:00' and partition_date <='? 09:00:00' group by srcip;";
+        String sql = "set mapred.reduce.tasks=30;select srcip as '源IP',count(*) as '请求次数' from ORC_PV_LOG where destip ='203.83.239.79' and  partition_date >= ? and partition_date <=? group by srcip;";
         log.info("执行sql {},{},{}",sql,startTime,endTime);
         BufferedWriter writer=null;
         File file=new File(config.getTmpdir()+ File.separator + "qingqiu_log"+endTime+".txt.ing");
         try {
             connection = getConnection();
             preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,startTime);
-            preparedStatement.setString(2,endTime);
+            preparedStatement.setString(1,startTime1);
+            preparedStatement.setString(2,endTime1);
             preparedStatement.setQueryTimeout(40*60);
             resultSet = preparedStatement.executeQuery();
 
             writer = new BufferedWriter(new FileWriter(file));
             // 获取 ResultSet 的列数
             int columnCount = resultSet.getMetaData().getColumnCount();
+//            log.info("获取到列数{}",columnCount);
 
             // 遍历 ResultSet 每一行
             while (resultSet.next()) {
@@ -243,11 +245,12 @@ public class JDBCUtils {
                         row.append(",");
                     }
                 }
-
+//                log.info("写出数据为{} file {}",row.toString(),file.getAbsolutePath());
                 // 写入一行数据到文件，并换行
                 writer.write(row.toString());
                 writer.newLine();
             }
+            writer.flush();
             file.renameTo(new File(config.getTmpdir()+ File.separator + "qingqiu_log"+endTime+".txt"));
             return true;
         } catch (Exception e) {
@@ -256,27 +259,33 @@ public class JDBCUtils {
             return false;
         }finally {
             close(resultSet,preparedStatement,connection);
+            try {
+                if(writer!=null)
+                    writer.close();
+            } catch (IOException ex) {
+            }
         }
     }
-    public boolean top100(String startTime,String endTime){
+    public boolean top100(String startTime,String endTime,String startTime1,String endTime1){
         PreparedStatement preparedStatement=null;
         ResultSet resultSet=null;
         Connection connection=null;
-        String sql = "select url ,count(*) as url_requestcount   from ORC_PV_LOG where srcip='120.241.38.9' and  partition_date >= '? 09:00:00' and partition_date <='? 09:00:00' group by url order by url_requestcount desc limit 100;";
+        String sql = "set mapred.reduce.tasks=30;select url ,count(*) as url_requestcount   from ORC_PV_LOG where srcip='120.241.38.9' and  partition_date >= ? and partition_date <=? group by url order by url_requestcount desc limit 100;";
         log.info("执行sql {},{},{}",sql,startTime,endTime);
         BufferedWriter writer=null;
         File file=new File(config.getTmpdir()+ File.separator + "top100"+endTime+".txt.ing");
         try {
             connection = getConnection();
             preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,startTime);
-            preparedStatement.setString(2,endTime);
+            preparedStatement.setString(1,startTime1);
+            preparedStatement.setString(2,endTime1);
             preparedStatement.setQueryTimeout(40*60);
             resultSet = preparedStatement.executeQuery();
 
             writer = new BufferedWriter(new FileWriter(file));
             // 获取 ResultSet 的列数
             int columnCount = resultSet.getMetaData().getColumnCount();
+//            log.info("获取到列数{}",columnCount);
 
             // 遍历 ResultSet 每一行
             while (resultSet.next()) {
@@ -291,11 +300,12 @@ public class JDBCUtils {
                         row.append(",");
                     }
                 }
-
+//                log.info("写出数据为{},file {}",row.toString(),file.getAbsolutePath());
                 // 写入一行数据到文件，并换行
                 writer.write(row.toString());
                 writer.newLine();
             }
+            writer.flush();
             file.renameTo(new File(config.getTmpdir()+ File.separator + "top100"+endTime+".txt"));
             return true;
         } catch (Exception e) {
@@ -304,6 +314,11 @@ public class JDBCUtils {
             return false;
         }finally {
             close(resultSet,preparedStatement,connection);
+            try {
+                if(writer!=null)
+                    writer.close();
+            } catch (IOException ex) {
+            }
         }
     }
 

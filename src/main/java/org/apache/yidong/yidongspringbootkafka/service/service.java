@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.time.LocalDate;
 
@@ -36,13 +37,13 @@ public class service {
     Data1Thread1 data1Thread1;
     Data1Thread2 data1Thread2;
 
-//    @PostConstruct
-//    public void init() {
-//        client1 = org.apache.yidong.yidongspringbootkafka.utils.Producer.getProducer("1", bootstrapServer1);
-//        client2 = org.apache.yidong.yidongspringbootkafka.utils.Producer.getProducer("2", bootstrapServer2);
-//        data1Thread1 = new Data1Thread1(delyTime,jdbcUtils,topic, client1, client2);
-//        data1Thread2 = new Data1Thread2(readFile,topic, client1, client2);
-//    }
+    @PostConstruct
+    public void init() {
+        client1 = org.apache.yidong.yidongspringbootkafka.utils.Producer.getProducer("1", bootstrapServer1);
+        client2 = org.apache.yidong.yidongspringbootkafka.utils.Producer.getProducer("2", bootstrapServer2);
+        data1Thread1 = new Data1Thread1(delyTime,jdbcUtils,topic, client1, client2);
+        data1Thread2 = new Data1Thread2(readFile,topic, client1, client2);
+    }
     @Scheduled(cron="${cron1}")
     public void cron1(){
         try {
@@ -64,19 +65,27 @@ public class service {
     @Scheduled(cron="${cron3}")
     public void cron3(){
         new File(config.getTmpdir()).mkdirs();
-        String startTime= LocalDate.now().toString();
-        String endTime= LocalDate.now().minusDays(1).toString();
+        String endTime= LocalDate.now().toString();
+        String startTime = LocalDate.now().minusDays(1).toString();
+//        String endTime= LocalDate.now().minusDays(1).toString();
+//        String startTime = LocalDate.now().minusDays(2).toString();
+        String endTime1= endTime+" 09:00:00";
+        String startTime1= startTime+" 09:00:00";
         sftpUtil.login();
-        if(jdbcUtils.qingqiu(startTime,endTime)){
+        File file = new File(config.getTmpdir() + File.separator + "qingqiu_log" + endTime + ".txt");
+        if(file.exists()||jdbcUtils.qingqiu(startTime,endTime,startTime1,endTime1)){
             try {
                 sftpUtil.upload(config.getRootpath(),config.getTmpdir()+ File.separator + "qingqiu_log"+endTime+".txt");
+                file.delete();
             } catch (Exception e) {
                log.error("上传异常",e);
             }
         }
-        if(jdbcUtils.top100(startTime,endTime)){
+        File file1 = new File(config.getTmpdir() + File.separator + "top100" + endTime + ".txt");
+        if(file.exists()||jdbcUtils.top100(startTime,endTime,startTime1,endTime1)){
             try {
-                sftpUtil.upload(config.getRootpath(),config.getTmpdir()+ File.separator + "qingqiu_log"+endTime+".txt");
+                sftpUtil.upload(config.getRootpath(),config.getTmpdir()+ File.separator + "top100"+endTime+".txt");
+                file1.delete();
             } catch (Exception e) {
                 log.error("上传异常",e);
             }
